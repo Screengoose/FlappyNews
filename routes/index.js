@@ -11,6 +11,7 @@ router.get('/', function(req, res, next) {
 });
 
 
+/* GET posts page. */
 router.get('/posts', function(req, res, next) {
   Post.find(function(err, posts){
     if(err){ return next(err); }
@@ -19,6 +20,8 @@ router.get('/posts', function(req, res, next) {
   });
 });
 
+
+/* Post posts page. */
 router.post('/posts', function(req, res, next) {
   var post = new Post(req.body);
 
@@ -44,6 +47,18 @@ router.param('post', function(req, res, next) {
 router.get('/posts/:post', function(req, res){
   res.json(req.post);
 });
+
+
+/* Put posts page. */
+router.put('/posts/:post/upvote', function(req, res, next){
+  req.post.upvote(function(err, post){
+    if (err) { return next(err);}
+
+    res.json(post);
+  });
+});
+
+
 
 
 module.exports = router;
